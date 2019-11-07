@@ -11,6 +11,7 @@ import VacinaDetails from './components/vacina/VacinaDetails';
 import VacinaList from './components/vacina/VacinaList';
 import ProjectList from './components/projects/ProjectList'
 import UploadVacina from './components/vacina/UploadVacina'
+import CreateVacinacao from './components/vacinacao/CreateVacinacao';
 
 class App extends Component {
   render() {
@@ -29,6 +30,7 @@ class App extends Component {
             <Route path='/vacina/:id' component={VacinaDetails} />
             <Route path='/ProjectList' component={ProjectList}/>
             <Route path='/UploadVacina' component={UploadVacina}/>
+            <Route path='/CriaVacinacao' component={CreateVacinacao}/>
 
           </Switch>
         </div>

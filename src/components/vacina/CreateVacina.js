@@ -13,7 +13,7 @@ class CreateVacina extends Component {
         idade: '',
         estrategia: ''
     }
-
+ 
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value
@@ -24,6 +24,7 @@ class CreateVacina extends Component {
         console.log(this.state);
         this.props.createVacina(this.state);
         this.props.history.push('/');
+        // sera que aparece no git
     }
 
     render() {

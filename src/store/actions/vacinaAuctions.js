@@ -1,4 +1,5 @@
 
+import firebase from 'firebase'
 
 export const createVacina = (vacina) => {
     return (dispatch, getState, {getFirestore}) => {
@@ -34,3 +35,28 @@ export const createVacina = (vacina) => {
     }
   };
   
+  export const criaVacinacao = (vacinacao,props) => {
+    return (dispatch, getState, {getFirestore}) => {
+      const firestore = getFirestore();
+      const profile = getState().firebase.profile;
+      const authorId = getState().firebase.auth.uid;
+      const firstName=profile.firstName;
+      const lastName= profile.lastName;
+      const cpf = profile.cpf;
+      const user= firebase.auth().currentUser;
+
+      
+      firestore.collection('criaVacinacao').add({
+        ...vacinacao,
+      
+        Aplicador:{profile,        IDAplicador: authorId,
+        },
+     
+        createdAt: new Date()
+      }).then(() => {
+        dispatch({ type: 'CREATE_VACINACAO_SUCCESS' });
+      }).catch(err => {
+        dispatch({ type: 'CREATE_VACINACAO_ERROR' }, err);
+      });
+    }
+  };

@@ -18,7 +18,7 @@ var firebaseConfig = {
   firebase.firestore().settings({ timestampsInSnapshots:true})
 
   const storage= firebase.storage();
-
+  const firestore=firebase.firestore();
   export {
-    storage,firebase as default
+   firestore,storage,firebase as default
   }
