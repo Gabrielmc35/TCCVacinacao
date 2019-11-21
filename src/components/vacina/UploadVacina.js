@@ -69,6 +69,9 @@ class UploadVacina extends Component {
         console.log(user)
         const uploadTask = storage.ref(user.uid + `/CartaoVacina/${'CartaoVacina'}`).put(image);
         this.setState({ canDownload: false });
+        uploadTask.then((ret) => {
+            console.log('*******ret***********', ret);
+        });
         uploadTask.on('state_changed',
 
             (snapshot) => {
@@ -121,7 +124,7 @@ class UploadVacina extends Component {
                 <progress value={this.state.progress} max="100" />
 
                 <input type="file" onChange={this.handleChange} ></input>
-                <button class="button" id="botaoUpload" onClick={this.handleUpload}>Upload</button>
+                <button className="button" id="botaoUpload" onClick={this.handleUpload}>Upload</button>
 
                 <br />
                 {canDownload && <div>
