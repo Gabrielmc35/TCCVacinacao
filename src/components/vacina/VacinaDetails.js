@@ -17,10 +17,12 @@ const VacinaDetails = (props) => {
         <div className="card z-depth-0">
           <div className="card-content">
             <span className="card-title">{vacina.nome + '(' +vacina.sigla +')'}</span>
-            <p>{'NomenclaturaAtual:'+vacina.nomenclaturaAtual}</p>
-            <p>{'Dose:'+vacina.dose}</p>
-            <p>{'Estrategia:'+vacina.estrategia}</p>
-            <p>{'Idade:'+vacina.idade}</p>
+            <p>{'NomenclaturaAtual: '+vacina.nomenclaturaAtual}</p>
+            <p>{'Lote: '+vacina.lote}</p>
+
+            <p>{'Dose: '+vacina.dose}</p>
+            <p>{'Estrategia: '+vacina.estrategia}</p>
+            <p>{'Idade: '+vacina.idade}</p>
            
 
           </div>

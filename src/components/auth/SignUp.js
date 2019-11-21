@@ -27,33 +27,33 @@ class SignUp extends Component {
     return (
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>
-          <h5 className="grey-text text-darken-3">Sign Up</h5>
+          <h5 className="grey-text text-darken-3">Cadastrar</h5>
           <div className="input-field">
-            <label htmlFor="email">Email</label>
-            <input type="email" id='email' onChange={this.handleChange} />
+            <label htmlFor="email">Email*</label>
+            <input type="email" id='email' onChange={this.handleChange} required />
           </div>
           <div className="input-field">
-            <label htmlFor="password">Password</label>
-            <input type="password" id='password' onChange={this.handleChange} />
+            <label htmlFor="password">Senha*</label>
+            <input type="password" id='password' onChange={this.handleChange} required />
           </div>
           <div className="input-field">
-            <label htmlFor="firstName">First Name</label>
-            <input type="text" id='firstName' onChange={this.handleChange} />
+            <label htmlFor="firstName">Nome*</label>
+            <input type="text" id='firstName' onChange={this.handleChange} required/>
           </div>
           <div className="input-field">
-            <label htmlFor="lastName">Last Name</label>
-            <input type="text" id='lastName' onChange={this.handleChange} />
+            <label htmlFor="lastName">Sobrenome*</label>
+            <input type="text" id='lastName' onChange={this.handleChange} required />
           </div>
           <div className="input-field">
             <label htmlFor="cpf">CPF</label>
-            <input type="text" id='cpf'  onChange={this.handleChange} />
+            <input type="text" id='cpf'  onChange={this.handleChange}required />
           </div>
           <div className="input-field">
             <label htmlFor="idade">Idade</label>
-            <input type="number" id='idade' onChange={this.handleChange} />
+            <input type="number" id='idade' onChange={this.handleChange} required />
           </div>
           <div className="input-field">
-            <button className="btn pink lighten-1 z-depth-0">Sign Up</button>
+            <button className="btn pink lighten-1 z-depth-0">Cadastrar</button>
             <div className="center red-text">
               { authError ? <p>{authError}</p> : null }
             </div>

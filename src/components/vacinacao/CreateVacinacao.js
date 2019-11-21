@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { criaVacinacao } from '../../store/actions/vacinaAuctions'
-import { Redirect } from 'react-router-dom'
-import VacinaSummary from '../vacina/VacinaSummary';
 import { firestore } from '../../config/fbConfig'
+import { NavLink } from 'react-router-dom'
 
 class createVacinacao extends Component {
     state = {
-        nomeUsuario: '',
-        Vacina: '',
-        teste: '',
         dados: undefined,
+        dadosUsers: undefined,
+        usuarioSelecionado: undefined,
+        vacinaSelecionada: undefined,
+        localvacina:'',
     }
 
 
@@ -23,18 +23,79 @@ class createVacinacao extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
+        console.log(this.state);
+
+        this.props.createVacinacao(this.state);
+        this.props.history.push('/');
     }
     componentDidMount = async () => {
         await this.loadData();
     }
+
+    getSelectValueVacina= () =>{
+        const selectedValue = document.getElementById("vacinaSelecionada").value;
+        const vacinaSelecionada= selectedValue;
+            console.log(selectedValue);
+            this.setState({vacinaSelecionada})
+        }
+        getSelectValueUsuario= () =>{
+            const selectValueUsuario= document.getElementById("usuarioSelecionado").value;
+            const usuarioSelecionado=selectValueUsuario;
+                this.setState({usuarioSelecionado})
+            }
+
+            
+            comparaValor= async() =>{
+                const dados=[];
+                const db= firestore;
+                const{vacinaSelecionada}=this.state;
+                const{usuarioSelecionado}=this.state;
+                console.log(dados)
+                const querySnapshot = await db.collection("vacinas").get(); // .then((querySnapshot) => {
+                const querySnapshotusers = await db.collection("users").get();
+                const dadosUsers=[];
+                    querySnapshot.forEach((doc) => {
+
+                        if(doc.id==vacinaSelecionada)
+                        {
+                            dados.push({
+                                id: doc.id,
+                                ...doc.data(),
+                            })
+
+                        }             
+            });
+            this.setState({dados});
+            console.log(dados)
+
+
+            querySnapshotusers.forEach((doc) => {
+
+                if(doc.id==usuarioSelecionado)
+                {
+                    dadosUsers.push({
+                        id: doc.id,
+                        ...doc.data(),
+                    })
+
+                }             
+    });
+    this.setState({dadosUsers});
+    console.log(dadosUsers)
+
+        }
+    
     loadData = async () => {
         // console.log(this.state);
         // this.props.createVacinacao(this.state);
         // this.props.history.push('/');
 
         const db = firestore;
+        const querySnapshotusers = await db.collection("users").get();
         const querySnapshot = await db.collection("vacinas").get(); // .then((querySnapshot) => {
         const dados = [];
+        const dadosUsers= [];
+    
         querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
             // console.log(doc.id, " => ", doc.data());
@@ -43,34 +104,72 @@ class createVacinacao extends Component {
                 ...doc.data(),
             })
         });
+        
         this.setState({ dados });
+
+        querySnapshotusers.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            // console.log(doc.id, " => ", doc.data());
+            dadosUsers.push({
+                id: doc.id,
+                ...doc.data(),
+            })
+        });
+        this.setState({ dadosUsers });
+
     };
+
+   
 
 
     render() {
         const { dados } = this.state;
-        return (
+        const {dadosUsers} = this.state;
+       
+                return (
 
             <div className="container">
-                <form className="white" onSubmit={this.handleSubmit}>
+                <form className="white"  onSubmit={this.handleSubmit} >
 
+                <label htmlFor="vacinaSelecionada">Seleciona a vacina a ser aplicada</label>
 
-                    <select class="browser-default">
-                        <option value="" disabled selected>Choose your option</option>
-                        {dados && dados.map(x => (
+                    <select class="browser-default" id="vacinaSelecionada" onChange={this.getSelectValueVacina}>
+                        <option value="" disabled selected>Vacinas</option>
+                        {dados && dados.sort((a,b)=> a.nome - b.nome).map(x => (
                             <option key={x.id} value={x.id}>
                                 {x.dose} - {x.estrategia} - {x.idade} - {x.nome} - {x.nomenclaturaAtual} - {x.sigla}
+                                
                             </option>
                         ))}
+                        
+
+                    </select>
+                    
+                    <label htmlFor="usuarioSelecionado">Selecione o Usuário que irá Receber a vacina</label>
+
+                    <select class="browser-default" id ="usuarioSelecionado" onChange ={this.getSelectValueUsuario}>
+                        <option value="" disabled selected>Usuários</option>
+                        {dadosUsers && dadosUsers.map(x => (
+                            <option key={x.id} value={x.id}>
+                                 {x.firstName} - {x.cpf}
+                                 
+                            </option>
+                        ))}
+                        
+                  
+
+}
                     </select>
                     <div className="input-field">
-                        <input type="text" id='teste' onChange={this.handleChange} />
-                        <label htmlFor="teste">teste</label>
+                        <input type="text" id='local'required    onChange={this.handleChange} onInput={this.comparaValor}/>
+                        <label htmlFor="local">local da vacina</label>
                     </div>
                     <div className="input-field">
-                        <button className="btn pink lighten-1">Create</button>
+                        
+                        <button className="btn green lighten-2" >Cadastrar Vacinação</button>
 
                     </div>
+                    <p class="btn red lighten-1 "  > <NavLink to='/'> Voltar </NavLink></p>
 
                 </form>
 
@@ -90,7 +189,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
 
     return {
-        createVacinacao: (vacinacao) => dispatch(criaVacinacao(createVacinacao))
+        createVacinacao: (vacinacao) => dispatch(criaVacinacao(vacinacao))
     }
 }
 
