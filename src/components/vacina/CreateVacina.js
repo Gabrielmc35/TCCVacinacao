@@ -68,7 +68,7 @@ class CreateVacina extends Component {
                         <button className="btn green lighten-2 " >Cadastrar Vacina</button>
                                 
                              </div>
-                             <h3 className="btn red lighten-1  "  > <NavLink to='/'> Voltar </NavLink></h3>
+                             <p className="btn red lighten-1  "  > <NavLink to='/'> Voltar </NavLink></p>
                              
                 </form>
                 
