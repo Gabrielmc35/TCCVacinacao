@@ -121,6 +121,8 @@ class UploadVacina extends Component {
         const { canDownload } = this.state;
         return (
             <div style={style}>
+            <h5 className="grey-text text-darken-3">Envie seu cartão de vacina</h5>
+
                 <progress value={this.state.progress} max="100" />
 
                 <input type="file" onChange={this.handleChange} ></input>

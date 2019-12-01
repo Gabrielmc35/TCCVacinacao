@@ -45,11 +45,11 @@ class SignUp extends Component {
             <input type="text" id='lastName' onChange={this.handleChange} required />
           </div>
           <div className="input-field">
-            <label htmlFor="cpf">CPF</label>
+            <label htmlFor="cpf">CPF*</label>
             <input type="text" id='cpf'  onChange={this.handleChange}required />
           </div>
           <div className="input-field">
-            <label htmlFor="idade">Idade</label>
+            <label htmlFor="idade">Idade*</label>
             <input type="number" id='idade' onChange={this.handleChange} required />
           </div>
           <div className="input-field">

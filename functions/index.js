@@ -47,3 +47,8 @@ exports.userJoined = functions.auth.user()
 
       });
 });
+
+
+exports.teste = functions.https.onRequest((request, response) => {
+  response.send("Hello from Firebase!");
+ });
