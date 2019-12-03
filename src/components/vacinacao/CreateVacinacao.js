@@ -51,7 +51,8 @@ class createVacinacao extends Component {
                 const{vacinaSelecionada}=this.state;
                 const{usuarioSelecionado}=this.state;
                 console.log(dados)
-                const querySnapshot = await db.collection("vacinas").get(); // .then((querySnapshot) => {
+                const querySnapshot = await db.collection("vacinas").orderBy('nome').get(); // .then((querySnapshot) => {
+                    
                 const querySnapshotusers = await db.collection("users").get();
                 const dadosUsers=[];
                     querySnapshot.forEach((doc) => {
@@ -83,6 +84,7 @@ class createVacinacao extends Component {
     this.setState({dadosUsers});
     console.log(dadosUsers)
 
+   
         }
     
     loadData = async () => {
@@ -91,8 +93,9 @@ class createVacinacao extends Component {
         // this.props.history.push('/');
 
         const db = firestore;
-        const querySnapshotusers = await db.collection("users").get();
-        const querySnapshot = await db.collection("vacinas").get(); // .then((querySnapshot) => {
+        const querySnapshotusers = await db.collection("users").orderBy('firstName').get();
+
+        const querySnapshot = await db.collection("vacinas").orderBy('nomenclaturaAtual').get(); // .then((querySnapshot) => {
         const dados = [];
         const dadosUsers= [];
     
@@ -104,9 +107,7 @@ class createVacinacao extends Component {
                 ...doc.data(),
             })
         });
-        
-        this.setState({ dados });
-
+        this.setState({ dados })
         querySnapshotusers.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
             // console.log(doc.id, " => ", doc.data());
@@ -115,18 +116,19 @@ class createVacinacao extends Component {
                 ...doc.data(),
             })
         });
-        this.setState({ dadosUsers });
-
+        this.setState({ dadosUsers })
+    
     };
 
    
 
-
+   
     render() {
+        
         const { dados } = this.state;
         const {dadosUsers} = this.state;
-       
-                return (
+
+               return (
 
             <div className="container">
                 <form className="white"  onSubmit={this.handleSubmit} >
@@ -135,9 +137,9 @@ class createVacinacao extends Component {
 
                     <select class="browser-default" id="vacinaSelecionada" onChange={this.getSelectValueVacina}>
                         <option value="" disabled selected>Vacinas</option>
-                        {dados && dados.sort((a,b)=> a.nome - b.nome).map(x => (
+                        {dados && dados.map(x => (
                             <option key={x.id} value={x.id}>
-                                {x.dose} - {x.estrategia} - {x.idade} - {x.nome} - {x.nomenclaturaAtual} - {x.sigla}
+                                {x.nome} 
                                 
                             </option>
                         ))}
